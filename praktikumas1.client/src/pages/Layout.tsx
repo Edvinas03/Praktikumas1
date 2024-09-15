@@ -1,4 +1,5 @@
 ﻿import { Link, Outlet, useFetchers, useNavigation } from "react-router-dom";
+import { HomeModernIcon, AcademicCapIcon } from '@heroicons/react/24/outline';
 
 export function Layout() {
     const navigation = useNavigation();
@@ -13,10 +14,10 @@ export function Layout() {
             <nav>
                 <ul className='flex gap-x-2'>
                     <li>
-                    <Link to="/">HOME</Link>
+                        <Link to="/">HOME.<HomeModernIcon className="h-6 w-6 text-white-500" /></Link>
                     </li>
                     <li>
-                    <Link to="/students">Students</Link>
+                        <Link to="/students">Students.<AcademicCapIcon className="h-6 w-6 text-white-500" /></Link>
                     </li>
                 </ul>
             </nav>

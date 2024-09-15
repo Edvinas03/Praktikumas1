@@ -18,8 +18,26 @@ namespace Praktikumas1.Server.Controllers;
         List<StudentDto> results = [];
 
         foreach (var student in students) {
-            results.Add(new StudentDto(student.Id, FullName:$"{student.FirstName} {student.LastName}", student.Email));
+            results.Add(new StudentDto(student.Id, student.FirstName, student.LastName, student.Email));
     }
         return Ok(results);
     }
+    [HttpPut("{id:int}")]
+
+    public async Task<IActionResult> Put(int id, StudentDto dto)
+    {
+        var student = await context.Students.FirstOrDefaultAsync(i => i.Id == id);
+        if (student != null)
+        {
+            student.SetValues(dto.FirstName, dto.LastName, dto.Email);
+            context.Students.Update(student);
+            await context.SaveChangesAsync();
+        }
+
+        return Ok();
+    }
 }
+
+
+
+
