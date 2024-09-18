@@ -18,17 +18,17 @@ export function StudentForm(props: StudentFormProps) {
             <input type="hidden" {...register("id")} />
             <div>
                 <label htmlFor="firstName" className={formStyle.label}>Vardas</label>
-                <input id="firstName" className={formStyle.input} {...register("firstName", { required: true, maxLength: 20 })} defaultValue={student?.firstName || ''}/>
+                <input id="firstName" className={formStyle.input} {...register("firstName", { required: true, maxLength: 20 })} />
             </div>
             <div>
                 <label htmlFor="lastName" className={formStyle.label}>Pavardė</label>
-                <input id="lastName" className={formStyle.input} {...register("lastName", { required: true, maxLength: 20 })} defaultValue={student?.lastName || ''} />
+                <input id="lastName" className={formStyle.input} {...register("lastName", { required: true, maxLength: 20 })} />
             </div>
             <div>
                 <label htmlFor="email" className={formStyle.label}>El. paštas</label>
-                <input id="email" className={formStyle.input} type="email" {...register("email")} defaultValue={student?.email || ''}/>
+                <input id="email" className={formStyle.input} type="email" {...register("email")} />
             </div>
-            <button className={formStyle.button} type="submit">Atnaujinti</button>
-            </form>
-    )
+            <button className={formStyle.button} type="submit">{student ? 'Atnaujinti' : 'Sukurti'}</button>
+        </form>
+    );
 }
