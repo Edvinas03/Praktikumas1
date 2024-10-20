@@ -1,6 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using Praktikumas1.Server.Data;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Praktikumas1.Server.Models.DTOs;
 using Praktikumas1.Server.Services;
 
@@ -8,6 +7,7 @@ namespace Praktikumas1.Server.Controllers;
 
     [ApiController]
 [Route("api/[controller]")]
+[Authorize]
 
 
     public class StudentsController(IGetStudentService getStudentService, ISaveStudentService saveStudentService) : ControllerBase
@@ -20,7 +20,7 @@ namespace Praktikumas1.Server.Controllers;
     }
     
     [HttpPut(template:"{id:int}")]
-
+    [ValidateAntiForgeryToken]
     public async Task<IActionResult> Put(int id, StudentDto dto)
     {
         await saveStudentService.Update(id, dto);
@@ -28,9 +28,18 @@ namespace Praktikumas1.Server.Controllers;
     }
 
     [HttpPost]
+    [ValidateAntiForgeryToken]
     public async Task<IActionResult> Post(StudentDto dto)
     {
         await saveStudentService.Store(dto);
+        return Ok();
+    }
+
+    [HttpDelete("{id}")]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> Delete(int id)
+    {
+        await saveStudentService.Delete(id);
         return Ok();
     }
 }

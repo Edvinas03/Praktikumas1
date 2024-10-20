@@ -1,10 +1,10 @@
 ﻿import { useEffect, useState } from "react"
-import { IStudent } from "../../interfaces/IStudent";
-import { getApi, putApi, postApi } from "../../api";
-import { Modal } from "../components/Modal";
+import { IStudent } from "@/interfaces/IStudent";
+import { getApi, putApi, postApi, deleteApi } from "@/api";
+import { Modal } from "@/pages/components/Modal";
 import { StudentForm } from "./components/StudentForm";
 import { StudentList } from "./components/StudentList";
-import { EyeIcon } from '@heroicons/react/24/outline';
+import { EyeIcon, TrashIcon } from '@heroicons/react/24/outline';
 
 export default function Students() {
     const [students, setStudents] = useState<IStudent[]>([])
@@ -12,7 +12,6 @@ export default function Students() {
     const [editStudent, setEditStudent] = useState<IStudent | undefined>()
     const [createStudent, setCreateStudent] = useState<boolean>(false)
     const [viewStudents, setViewStudents] = useState<boolean>(false);
-
 
     const getStudents = () => getApi<IStudent[]>('students').then(s => s && setStudents(s))
     const storeStudent = (student: IStudent) => {
@@ -24,6 +23,10 @@ export default function Students() {
             const {id, ...newStudent } = student
             postApi('students', newStudent).then(() => getStudents());
         }
+    }
+
+    const deleteStudent = (id: number) => {
+        deleteApi(`students/${id}`, {}).then(() => getStudents());
     }
     const editHandler = (student: IStudent) => {
         setEditStudent(student)
@@ -59,7 +62,9 @@ export default function Students() {
         <button type="button" onClick={createHandler} className="mb-4 bg-gray-500 text-white py-2 px-4 rounded">Pridėti naują studentą</button>
         <div>{
             students.map(student => <div key={student.id}><button type="button" onClick={() => editHandler(student)}>{student.firstName} {student.lastName}</button> {student.email}
-                <button type="button" onClick={viewStudentsHandler}><EyeIcon className="h-4 w-4 text-white-500" /></button></div>)
+                <button type="button" onClick={viewStudentsHandler}><EyeIcon className="h-4 w-4 text-white-500" /></button>
+                <button type="button" onClick={() => deleteStudent(student.id)}><TrashIcon className="h-4 w-4 text-white-500" /></button>
+            </div>)
         }</div>
     </div>
 }

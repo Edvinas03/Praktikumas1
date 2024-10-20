@@ -2,6 +2,7 @@
   "dependencies": {
     "@heroicons/react": "^2.1.5",
     "react-hook-form": "^7.53.0",
+    "swr": "^2.2.5",
     "zustand": "^4.5.5"
   }
 }

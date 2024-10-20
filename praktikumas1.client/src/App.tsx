@@ -1,30 +1,24 @@
 import {
-    createBrowserRouter,
     RouterProvider,
 } from "react-router-dom";
-import Home from "./pages/HomePage/Home";
-import { Layout } from "./pages/Layout";
-import Students from "./pages/StudentsPage/Students";
+
+import { router } from "@/routes";
+import { useStore } from "@/store";
+import { getApi } from "@/api";
+import { IAuth } from "@/interfaces/IAuth";
+import { useEffect } from "react";
+
 
 export default function App() {
 
-    const router = createBrowserRouter([
-        {
-            path: "/",
-            Component: Layout,
-            children: [
-                {
-                    index: true,
-                    Component: Home
-                },
-                {
-                    path: 'students',
-                    Component: Students
-                }
-            ]
-        },
-    ]);
+    const { auth, setAuth } = useStore((state) => ({ auth: state.auth, setAuth: state.setAuth }))
+    useEffect(() => {
+        if (auth === undefined)
+            getApi<IAuth>('authentication/check-session').then(res => {
+                setAuth(res)
+            })
+    }, [auth]);
 
 
-    return <RouterProvider router={router} />
+    return <RouterProvider router={router()} />
 }
