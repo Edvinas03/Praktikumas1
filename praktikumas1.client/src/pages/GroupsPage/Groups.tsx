@@ -27,7 +27,7 @@ export default function Students() {
     }
 
     const deleteGroup = (id: number) => {
-        deleteApi(`groupss/${id}`, {}).then(() => getGroups());
+        deleteApi(`groups/${id}`, {}).then(() => getGroups());
     }
     const editHandler = (group: IGroup) => {
         setEditGroup(group)

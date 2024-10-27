@@ -88,6 +88,7 @@ services.AddScoped<IGetGroupService, GetGroupService>();
 services.AddScoped<ISaveGroupService, SaveGroupService>();
 services.AddScoped<IGetSubjectService, GetSubjectService>();
 services.AddScoped<ISaveSubjectService, SaveSubjectService>();
+services.AddScoped<IGetUserService, GetUserService>();
 services.AddScoped<IAuthService, AuthService>();
 
 

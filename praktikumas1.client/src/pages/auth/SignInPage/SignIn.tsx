@@ -5,12 +5,12 @@ import { useForm } from "react-hook-form"
 import { useState } from "react";
 import { postApi } from "@/api";
 import { useNavigate } from "react-router-dom";
-import { useStore } from "@/store";
+import { useStore, useShallow } from "@/store";
 import { IAuth } from "@/interfaces/IAuth";
 
 export default function SignIn() {
     const [error, setError] = useState<string | undefined>();
-    const { setAuth } = useStore((state) => ({ setAuth: state.setAuth }));
+    const { setAuth } = useStore(useShallow((state) => ({ setAuth: state.setAuth })));
     const { register, handleSubmit, formState: { errors } } = useForm<IUser>();
     const navigate = useNavigate();
 
